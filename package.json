@@ -16,7 +16,8 @@
     "nor-is": "*",
     "nor-fs": "*",
     "methods": "*",
-    "prettified": "*"
+    "prettified": "*",
+    "nor-debug": "*"
   },
   "bugs": {
     "url": "https://github.com/Sendanor/nor-express/issues"

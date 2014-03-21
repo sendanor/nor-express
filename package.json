@@ -15,10 +15,10 @@
   "license": "MIT",
   "dependencies": {
     "nor-is": ">= 0.1.10 < 0.2.0",
-    "nor-fs": ">= 0.1.4 < 0.2.0",
+    "nor-fs": ">= 0.1.5 < 0.2.0",
     "methods": ">= 0.1.0 < 0.2.0",
     "prettified": ">= 0.0.7 < 0.1.0",
-    "nor-debug": ">= 0.1.21 < 0.2.0",
+    "nor-debug": ">= 0.1.22 < 0.2.0",
     "escape-html": "1.0.1"
   },
   "devDependencies": {

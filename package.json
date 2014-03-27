@@ -1,6 +1,6 @@
 {
   "name": "nor-express",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "Express addons",
   "main": "lib/index.js",
   "scripts": {

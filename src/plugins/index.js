@@ -9,6 +9,7 @@ module.exports = {
 	'render_with_layout':    require('./render_with_layout.js'),
 	'send_error':    require('./send_error.js'),
 	'static_session_auth': require('./static_session_auth.js'),
-	'request_id': require('./request_id.js')
+	'request_id': require('./request_id.js'),
+	'javascript': require('./javascript.js')
 };
 /* EOF */

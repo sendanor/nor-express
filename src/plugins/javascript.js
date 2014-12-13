@@ -88,13 +88,13 @@ exports = module.exports = function(options){
 				}
 			}
 
-			var first = buf.trim().substr(0, 'function('.length);
+			var first = buf.trim().substr(0, 'function'.length);
 
 			if (0 == buf.length) {
 				return next(utils.error(400, 'invalid javascript, empty body'));
 			}
 
-			if (strict && ('function(' !== first)) return next(utils.error(400, 'invalid javascript'));
+			if (strict && ('function' !== first)) return next(utils.error(400, 'invalid javascript'));
 			try {
 				req.body = FUNCTION.parse(buf);
 			} catch (err){

@@ -1,6 +1,9 @@
 /* Overrides `res.render()` to support default from `app.get('layout')` */
 
+"use strict";
+
 var debug = require('nor-debug');
+var FUNCTION = require('nor-function');
 
 module.exports = function render_with_layout() {
 	//debug.log('here');
@@ -11,7 +14,7 @@ module.exports = function render_with_layout() {
 		debug.assert(res).is('object');
 		debug.assert(next).is('function');
 
-		var _render = res.render.bind(res);
+		var _render = FUNCTION(res.render).bind(res);
 		res.render = function(name, options, fn){
 			options = options || {};
 			if(typeof options.layout === 'undefined') {

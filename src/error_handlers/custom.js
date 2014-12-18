@@ -1,7 +1,10 @@
 /* Handle custom exception types */
+"use strict";
+
 var _Q = require('q');
 var debug = require('nor-debug');
-var plugins = require('../plugins');
+var FUNCTION = require('nor-function');
+//var plugins = require('../plugins');
 var HTTPError = require('../HTTPError.js');
 
 /** */
@@ -56,13 +59,13 @@ function error_handler(tmpl, err, req, res, next) {
 		debug.assert(next).is('function');
 		next(err);
 	}).done();
-};
+}
 
 module.exports = function error_handler_custom(opts) {
 	opts = opts || {};
 	var tmpl = opts.template || default_tmpl;
 	debug.assert(tmpl).is('function');
-	return error_handler.bind(undefined, tmpl);
+	return FUNCTION(error_handler).curry(tmpl);
 };
 
 /* EOF */

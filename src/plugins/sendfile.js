@@ -1,6 +1,7 @@
 /* Sendfile Route implementation */
 
-var debug = require('nor-debug');
+"use strict";
+//var debug = require('nor-debug');
 
 module.exports = function(path, opts) {
 	//debug.log('here');

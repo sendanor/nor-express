@@ -3,6 +3,8 @@
  * Module dependencies.
  */
 
+"use strict";
+
 /* FIXME: update expiration so that the session does not expire when user is using the system! */
 
 var util = require('util');

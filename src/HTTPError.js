@@ -1,4 +1,5 @@
 /* HTTP Error implementation */
+"use strict";
 
 var util = require('util');
 

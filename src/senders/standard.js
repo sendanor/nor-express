@@ -1,5 +1,7 @@
 /* Standard data sender */
 
+"use strict";
+
 var is = require('nor-is');
 var debug = require('nor-debug');
 var plugins = require('../plugins');

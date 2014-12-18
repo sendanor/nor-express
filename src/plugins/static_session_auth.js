@@ -1,4 +1,7 @@
 /** Session and GET based preview authentication mode */
+
+"use strict";
+
 var debug = require('nor-debug');
 var HTTPError = require('../HTTPError.js');
 var URL = require('url');

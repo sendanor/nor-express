@@ -30,6 +30,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+"use strict";
+
 /**
  * Module dependencies.
  */
@@ -60,13 +62,19 @@ exports = module.exports = function(options){
 	var verify = typeof options.verify === 'function' && options.verify;
 
 	return function javascript(req, res, next) {
-		if (req._body) return next();
+		if (req._body) {
+			return next();
+		}
 		req.body = req.body || {};
 
-		if (!utils.hasBody(req)) return next();
+		if (!utils.hasBody(req)) {
+			return next();
+		}
 
 		// check Content-Type
-		if (!exports.regexp.test(utils.mime(req))) return next();
+		if (!exports.regexp.test(utils.mime(req))) {
+			return next();
+		}
 
 		// flag as parsed
 		req._body = true;
@@ -77,24 +85,31 @@ exports = module.exports = function(options){
 			length: req.headers['content-length'],
 			encoding: 'utf8'
 		}, function (err, buf) {
-			if (err) return next(err);
+			if (err) {
+				return next(err);
+			}
 
 			if (verify) {
 				try {
-					verify(req, res, buf)
+					verify(req, res, buf);
 				} catch (err) {
-					if (!err.status) err.status = 403;
+					if (!err.status) {
+						err.status = 403;
+					}
 					return next(err);
 				}
 			}
 
 			var first = buf.trim().substr(0, 'function'.length);
 
-			if (0 == buf.length) {
+			if (0 === buf.length) {
 				return next(utils.error(400, 'invalid javascript, empty body'));
 			}
 
-			if (strict && ('function' !== first)) return next(utils.error(400, 'invalid javascript'));
+			if (strict && ('function' !== first)) {
+				return next(utils.error(400, 'invalid javascript'));
+			}
+
 			try {
 				req.body = FUNCTION.parse(buf);
 			} catch (err){
@@ -103,7 +118,7 @@ exports = module.exports = function(options){
 				return next(err);
 			}
 			next();
-		})
+		});
 	};
 };
 

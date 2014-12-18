@@ -1,8 +1,10 @@
 /* Redirect Route implementation */
 
-var debug = require('nor-debug');
+"use strict";
+
+//var debug = require('nor-debug');
 var prettified = require('prettified');
-var http = require('http');
+//var http = require('http');
 var HTTPError = require('../HTTPError.js');
 
 module.exports = function(err) {

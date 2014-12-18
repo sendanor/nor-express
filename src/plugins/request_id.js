@@ -1,6 +1,8 @@
 /** Create unique idenfitied (UUID v4) and set it to `request.id` and for response as HTTP header `Request-ID`. */
 
-var Q = require('q');
+"use strict";
+
+//var _Q = require('q');
 var uuid = require('node-uuid');
 var debug = require('nor-debug');
 

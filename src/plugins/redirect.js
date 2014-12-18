@@ -1,6 +1,8 @@
 /* Redirect Route implementation */
 
-var debug = require('nor-debug');
+"use strict";
+
+//var debug = require('nor-debug');
 
 module.exports = function(target) {
 	//debug.log('here');

@@ -1,4 +1,6 @@
 
+"use strict";
+
 var debug = require('nor-debug');
 var is = require('nor-is');
 

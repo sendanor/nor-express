@@ -1,4 +1,5 @@
 /* Handle standard exception types */
+"use strict";
 var debug = require('nor-debug');
 var plugins = require('../plugins');
 var HTTPError = require('../HTTPError.js');

@@ -1,5 +1,8 @@
 /* Hijack `res.redirect()` with better implementation which has support for JSON etc. */
-var debug = require('nor-debug');
+
+"use strict";
+
+//var debug = require('nor-debug');
 var escapeHtml = require('escape-html');
 var statusCodes = require('http').STATUS_CODES;
 

@@ -1,4 +1,5 @@
 /* */
+"use strict";
 module.exports = {
 	'error':    require('./error.js'),
 	'redirect': require('./redirect.js'),

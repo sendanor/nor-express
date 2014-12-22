@@ -30,7 +30,9 @@ module.exports = function send_error(code, obj) {
 		obj.error = 'Error '+obj.code;
 	}
 
-	return function(req, res) {
+	return function send_error_(req, res) {
+		debug.assert(req).is('object');
+		debug.assert(res).is('object');
 		//debug.log('here');
 		res.type('application/json');
 		res.send(code, JSON.stringify(obj) + '\n' );

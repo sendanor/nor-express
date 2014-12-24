@@ -49,21 +49,23 @@ module.exports = function senders_standard() {
 		res.send(data);
 	}
 
+	function standard_sender_(data, req, res, next) {
+		if(is.obj(data)) {
+			return json_sender(data, req, res, next);
+		}
+
+		if(is.string(data)) {
+			return html_sender(data, req, res, next);
+		}
+
+		return json_sender({'$': data}, req, res, next);
+	}
+
 	return function standard_sender(data, req, res, next) {
 		//debug.log('here');
 		// Send as JSON
 		try {
-
-			if(is.obj(data)) {
-				return json_sender(data, req, res, next);
-			}
-
-			if(is.string(data)) {
-				return html_sender(data, req, res, next);
-			}
-
-			return json_sender({'$': data}, req, res, next);
-
+			return standard_sender_(data, req, res, next);
 		} catch(err) {
 			if(req.id) {
 				debug.error('['+ req.id +'] ', err);

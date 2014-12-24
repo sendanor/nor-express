@@ -7,6 +7,7 @@ var is = require('nor-is');
 var FS = require('fs');
 var PATH = require('path');
 var merge = require('merge');
+var ARRAY = require('nor-array');
 var FUNCTION = require('nor-function');
 
 var ROUTES = module.exports = {};
@@ -18,7 +19,7 @@ var _express_methods = {
 	'USE':'use'
 };
 
-require('methods').forEach(function(method) {
+ARRAY(require('methods')).forEach(function(method) {
 	_express_methods[method.toUpperCase()] = method;
 });
 
@@ -38,26 +39,30 @@ function do_send(opts, data, req, res, next) {
 /** Join multiple Express plugins into one */
 function join_plugins(plugins) {
 	debug.assert(plugins).is('array');
-	debug.assert( plugins.every(FUNCTION(is.func).curry()) ).equals(true);
+	debug.assert( ARRAY(plugins).every(is.func) ).equals(true);
 
 	return function(req, res, next) {
 		var queue = [].concat(plugins);
 
-		function do_iteration() {
-			try {
-				if(queue.length === 0) {
-					next();
+		function do_iteration_() {
+			if(queue.length === 0) {
+				next();
+				return;
+			}
+			var plugin = queue.shift();
+			debug.assert(plugin).is('function');
+			plugin(req, res, function(err) {
+				if(err) {
+					next(err);
 					return;
 				}
-				var plugin = queue.shift();
-				debug.assert(plugin).is('function');
-				plugin(req, res, function(err) {
-					if(err) {
-						next(err);
-						return;
-					}
-					do_iteration();
-				});
+				do_iteration_();
+			});
+		}
+
+		function do_iteration() {
+			try {
+				do_iteration_();
 			} catch(err) {
 				next(err);
 				return;
@@ -89,32 +94,37 @@ function fix_for_missing_req_route(target, method) {
 /* */
 function build_request(opts, handler) {
 	debug.assert(handler).is('function');
+
+	function do_request_(req, res, next) {
+		debug.assert(req).is('object');
+		debug.assert(res).is('object');
+		debug.assert(next).is('function');
+
+		var ret = handler(req, res, next);
+
+		//debug.log('ret = ' , ret);
+		// Handle undefined result -- do nothing
+		if(ret === undefined) {
+			return;
+		// Handle promises
+			} else if(ret && is.func(ret.then)) {
+			ret.then(function(result) {
+				if(result !== undefined) {
+					do_send(opts, result, req, res, next);
+				}
+			}).fail(function(err) {
+				next(err);
+			}).done();
+			return;
+		// Everything else is sent encoded as JSON with status 200 OK
+		} else {
+			do_send(opts, ret, req, res, next);
+		}
+	}
+
 	return function do_request(req, res, next) {
 		try {
-			debug.assert(req).is('object');
-			debug.assert(res).is('object');
-			debug.assert(next).is('function');
-
-			var ret = handler(req, res, next);
-
-			//debug.log('ret = ' , ret);
-			// Handle undefined result -- do nothing
-			if(ret === undefined) {
-				return;
-			// Handle promises
-				} else if(ret && is.func(ret.then)) {
-				ret.then(function(result) {
-					if(result !== undefined) {
-						do_send(opts, result, req, res, next);
-					}
-				}).fail(function(err) {
-					next(err);
-				}).done();
-				return;
-			// Everything else is sent encoded as JSON with status 200 OK
-			} else {
-				do_send(opts, ret, req, res, next);
-			}
+			do_request_(req, res, next);
 		} catch(err) {
 			next(err);
 		}
@@ -260,7 +270,7 @@ ROUTES.load = function(path, opts) {
 		routes = ROUTES.parse( opts.require( routes_file ), {'routes': false} );
 	}
 
-	FS.readdirSync(path).forEach(function(filename) {
+	ARRAY(FS.readdirSync(path)).forEach(function(filename) {
 
 		var full_filename = PATH.resolve(path, filename);
 		var stat = FS.statSync(full_filename);
@@ -326,14 +336,14 @@ ROUTES.setup = function(app, routes, target, opts) {
 
 	debug.assert(middleware).is('array');
 
-	if(!middleware.every(is.func)) {
+	if(!ARRAY(middleware).every(is.func)) {
 		throw new TypeError('middleware array contains non-function elements!');
 	}
 
 	//console.error('DEBUG: routes.setup(app, routes=' + JSON.stringify(routes, null, 2) + ', target=' + JSON.stringify(target, null, 2) + ')');
 
 	// Setup member handlers
-	Object.keys(routes).forEach(FUNCTION(setup_member).curry({
+	ARRAY(Object.keys(routes)).forEach(FUNCTION(setup_member).curry({
 		"routes": routes,
 		"opts": opts,
 		"middleware": middleware,

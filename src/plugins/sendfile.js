@@ -3,9 +3,9 @@
 "use strict";
 //var debug = require('nor-debug');
 
-module.exports = function(path, opts) {
+module.exports = function plugins_sendfile(path, opts) {
 	//debug.log('here');
-	var f = function(req, res) {
+	var f = function sendfile(req, res) {
 		//debug.log('here');
 		if(!opts) {
 			res.sendfile(path);

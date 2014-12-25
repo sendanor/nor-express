@@ -4,9 +4,9 @@
 
 //var debug = require('nor-debug');
 
-module.exports = function(view, opts) {
+module.exports = function setup_plugins_render(view, opts) {
 	//debug.log('here');
-	var f = function(req, res) {
+	var f = function plugins_render(req, res) {
 		//debug.log('here');
 		if(!opts) {
 			res.render(view);

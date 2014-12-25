@@ -6,12 +6,12 @@
 var escapeHtml = require('escape-html');
 var statusCodes = require('http').STATUS_CODES;
 
-module.exports = function(opts) {
+module.exports = function plugins_multimedia_redirect(opts) {
 	opts = opts || {};
 	return function(req, res, next){
 
 		/* This function is originally from visionmedia/express's lib/response.js:664. It has extended support for JSON reply and content has line break. */
-		res.redirect = function(url){
+		res.redirect = function plugins_multimedia_redirect(url){
 
 			var status = 302;
 			var body;

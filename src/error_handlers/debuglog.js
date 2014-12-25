@@ -5,7 +5,7 @@ module.exports = function error_handler_debuglog(opts) {
 	//debug.log('here');
 	opts = opts || {};
 	var go_next = !!( opts.next );
-	return function(err, req, res, next) {
+	return function error_handler_debuglog_(err, req, res, next) {
 		var prefix = '';
 		if(req.id) {
 			prefix += '[' + req.id + '] ';

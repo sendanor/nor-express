@@ -5,7 +5,7 @@ var plugins = require('../plugins');
 var HTTPError = require('../HTTPError.js');
 module.exports = function error_handler_standard(opts) {
 	opts = opts || {};
-	return function(err, req, res, next) {
+	return function error_handler_standard_(err, req, res, next) {
 		if(err instanceof HTTPError) {
 			plugins.send_error({'error':''+err.message, 'code':err.code})(req, res);
 		} else if (err instanceof URIError){

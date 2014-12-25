@@ -19,7 +19,7 @@ var _express_methods = {
 	'USE':'use'
 };
 
-ARRAY(require('methods')).forEach(function(method) {
+ARRAY(require('methods')).forEach(function set_method(method) {
 	_express_methods[method.toUpperCase()] = method;
 });
 
@@ -41,7 +41,7 @@ function join_plugins(plugins) {
 	debug.assert(plugins).is('array');
 	debug.assert( ARRAY(plugins).every(is.func) ).equals(true);
 
-	return function(req, res, next) {
+	return function join_plugins_(req, res, next) {
 		var queue = [].concat(plugins);
 
 		function do_iteration_() {
@@ -51,7 +51,7 @@ function join_plugins(plugins) {
 			}
 			var plugin = queue.shift();
 			debug.assert(plugin).is('function');
-			plugin(req, res, function(err) {
+			plugin(req, res, function plugin_wrapper(err) {
 				if(err) {
 					next(err);
 					return;
@@ -101,34 +101,38 @@ function build_request(opts, handler) {
 		debug.assert(next).is('function');
 
 		var ret = handler(req, res, next);
-
 		//debug.log('ret = ' , ret);
+
 		// Handle undefined result -- do nothing
 		if(ret === undefined) {
 			return;
+		}
+
 		// Handle promises
-			} else if(ret && is.func(ret.then)) {
-			ret.then(function(result) {
+		if(ret && is.func(ret.then)) {
+			ret.then(function ret_success(result) {
 				if(result !== undefined) {
 					do_send(opts, result, req, res, next);
 				}
-			}).fail(function(err) {
+			}).fail(function ret_failed(err) {
 				next(err);
 			}).done();
 			return;
-		// Everything else is sent encoded as JSON with status 200 OK
-		} else {
-			do_send(opts, ret, req, res, next);
 		}
+
+		// Everything else is sent encoded as JSON with status 200 OK
+		do_send(opts, ret, req, res, next);
 	}
 
-	return function do_request(req, res, next) {
+	function do_request(req, res, next) {
 		try {
 			do_request_(req, res, next);
 		} catch(err) {
 			next(err);
 		}
-	};
+	}
+
+	return do_request;
 }
 
 /** Setup member handlers */
@@ -240,7 +244,7 @@ function accept_multi(filename, state) {
 }
 
 /** Load routes from filesystem directory */
-ROUTES.load = function(path, opts) {
+ROUTES.load = function routes_load(path, opts) {
 	opts = opts || {};
 	debug.assert(opts).is('object');
 
@@ -270,7 +274,7 @@ ROUTES.load = function(path, opts) {
 		routes = ROUTES.parse( opts.require( routes_file ), {'routes': false} );
 	}
 
-	ARRAY(FS.readdirSync(path)).forEach(function(filename) {
+	ARRAY(FS.readdirSync(path)).forEach(function routes_load_path(filename) {
 
 		var full_filename = PATH.resolve(path, filename);
 		var stat = FS.statSync(full_filename);
@@ -316,7 +320,7 @@ ROUTES.load = function(path, opts) {
 };
 
 /** Setup routes to express */
-ROUTES.setup = function(app, routes, target, opts) {
+ROUTES.setup = function routes_setup(app, routes, target, opts) {
 	target = target || '/';
 	opts = opts || {};
 

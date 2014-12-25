@@ -36,10 +36,10 @@ module.exports = function static_session_auth(opts) {
 
 		//debug.log('username = ', username);
 		//debug.log('password = ', password);
-			
+
 		//debug.log('opts.username = ', opts.username);
 		//debug.log('opts.password = ', opts.password);
-			
+
 		debug.assert(opts.username).is('string');
 		debug.assert(opts.password).is('string');
 		debug.assert(username).ignore(undefined).is('string');
@@ -49,7 +49,7 @@ module.exports = function static_session_auth(opts) {
 			throw new HTTPError(403, "No username specified.");
 		}
 
-		if( username && password && (opts.username === username) && 
+		if( username && password && (opts.username === username) &&
 		    (opts.password === password) ) {
 			req.session.testing = true;
 			next();

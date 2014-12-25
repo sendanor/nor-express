@@ -5,9 +5,9 @@
 var debug = require('nor-debug');
 var FUNCTION = require('nor-function');
 
-module.exports = function render_with_layout() {
+module.exports = function setup_render_with_layout() {
 	//debug.log('here');
-	return function(req, res, next){
+	return function render_with_layout(req, res, next){
 		//debug.log('here');
 
 		debug.assert(req).is('object');
@@ -15,7 +15,7 @@ module.exports = function render_with_layout() {
 		debug.assert(next).is('function');
 
 		var _render = FUNCTION(res.render).bind(res);
-		res.render = function(name, options, fn){
+		res.render = function render_with_layout_setup(name, options, fn){
 			options = options || {};
 			if(typeof options.layout === 'undefined') {
 				options.layout = res.app.get('layout');

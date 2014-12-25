@@ -9,7 +9,7 @@ function param_regexp_support_(name, fn){
 		return;
 	}
 
-	return function(req, res, next, val){
+	return function param_regexp_support_request(req, res, next, val){
 		var captures;
 		captures = fn.exec(''+val);
 		if (captures) {

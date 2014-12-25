@@ -56,7 +56,7 @@ var FUNCTION = require('nor-function');
  * @api public
  */
 
-exports = module.exports = function(options){
+exports = module.exports = function plugin_javascript(options){
 	options = options || {};
 	var strict = options.strict !== false;
 	var verify = typeof options.verify === 'function' && options.verify;

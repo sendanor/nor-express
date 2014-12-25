@@ -2,14 +2,11 @@
 "use strict";
 
 var debug = require('nor-debug');
-//var util = require('util');
+var ARRAY = require('nor-array');
 
-module.exports = function() {
-	//debug.log('here');
-	//var id = 0;
-	return function(req, res, next) {
-		//debug.log('here');
-		['writeContinue' , 'writeHead' , 'setTimeout' , 'setHeader' , 'removeHeader' , 'write' , 'addTrailers' , 'end'].forEach(function(method) {
+module.exports = function setup_inspect_methods() {
+	return function inspect_methods(req, res, next) {
+		ARRAY(['writeContinue' , 'writeHead' , 'setTimeout' , 'setHeader' , 'removeHeader' , 'write' , 'addTrailers' , 'end']).forEach(function(method) {
 			debug.inspectMethod(res, method);
 		});
 		next();

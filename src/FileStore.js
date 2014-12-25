@@ -10,18 +10,20 @@
 var util = require('util');
 var fs = require('nor-fs');
 
-module.exports = function(connect) {
-	
+module.exports = function filestore(connect) {
+
 	var Store = connect.session.Store;
-	
+
 	function FileStore(options) {
 		options = options || {};
 		Store.call(this, options);
 		this.session_dir = options.session_dir || './sessions';
 	}
-	
+
+	/* jshint ignore:start */
 	FileStore.prototype.__proto__ = Store.prototype;
-	
+	/* jshint ignore:end */
+
 	FileStore.prototype.get = function(sid, callback) {
 		var self = this;
 		try {
@@ -35,7 +37,7 @@ module.exports = function(connect) {
 			callback(e);
 		}
 	};
-	
+
 	FileStore.prototype.set = function(sid, session, callback) {
 		var self = this;
 		try {
@@ -70,7 +72,7 @@ module.exports = function(connect) {
 			}
 		}
 	};
-	
+
 	FileStore.prototype.destroy = function(sid, callback) {
 		var self = this;
 		if(typeof callback !== 'function') {
@@ -84,7 +86,7 @@ module.exports = function(connect) {
 			callback(err);
 		}).done();
 	};
-	
+
 	/*
 	FileStore.prototype.length = function(fn){
 		this.client.dbsize(fn);
@@ -94,7 +96,7 @@ module.exports = function(connect) {
 		this.client.flushdb(fn);
 	};
 	*/
-	
+
 	return FileStore;
 };
 

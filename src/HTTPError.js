@@ -1,6 +1,7 @@
 /* HTTP Error implementation */
 "use strict";
 
+var ARRAY = require('nor-array');
 var util = require('util');
 
 /** Exception type for HTTP errors */
@@ -12,7 +13,7 @@ function HTTPError() {
 	}
 
 	var headers, msg, code;
-	args.forEach(function(arg) {
+	ARRAY(args).forEach(function HTTPError_foreach(arg) {
 		if(typeof arg === 'object') {
 			headers = arg;
 		}
@@ -54,7 +55,7 @@ HTTPError.codes = {};
 */
 
 /** Create HTTP exception */
-HTTPError.create = function(code, msg, headers) {
+HTTPError.create = function httperror_create(code, msg, headers) {
 	return (HTTPError.codes[code] && HTTPError.codes[code](code, msg, headers)) || new HTTPError(code, msg, headers);
 };
 

@@ -6,10 +6,10 @@
 var uuid = require('node-uuid');
 var debug = require('nor-debug');
 
-module.exports = function(opts) {
+module.exports = function setup_request_id(opts) {
 	debug.assert(opts).ignore(undefined).is('object');
 	opts = opts || {};
-	var f = function(req, res, next) {
+	var f = function request_id(req, res, next) {
 		debug.assert(req.id).is('undefined');
 		req.id = uuid.v4();
 		res.setHeader("Request-ID", req.id);

@@ -26,7 +26,7 @@ var express_async_profiler = module.exports = function plugin_async_profiler(mid
 			return;
 		}
 
-		var name = FUNCTION.parseName(middleware);
+		var name = FUNCTION(middleware).parseName();
 		p = new AsyncProfile({
 				callback: function(result) {
 					debug.log( 'Profiling express ' + name + ': ' );

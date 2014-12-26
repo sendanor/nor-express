@@ -2,6 +2,7 @@
 "use strict";
 
 var ARRAY = require('nor-array');
+var FUNCTION = require('nor-function');
 var util = require('util');
 
 /** Exception type for HTTP errors */
@@ -9,7 +10,7 @@ function HTTPError() {
 	var args = Array.prototype.slice.call(arguments);
 	if(!(this instanceof HTTPError)) {
 		var self = new HTTPError();
-		return self.apply(self, args);
+		return FUNCTION(self).apply(self, args);
 	}
 
 	var headers, msg, code;

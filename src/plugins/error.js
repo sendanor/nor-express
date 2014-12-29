@@ -3,6 +3,7 @@
 "use strict";
 
 //var debug = require('nor-debug');
+var ARRAY = require('nor-array');
 var prettified = require('prettified');
 //var http = require('http');
 var HTTPError = require('../HTTPError.js');
@@ -12,7 +13,7 @@ module.exports = function plugins_error(err) {
 	function plugins_error_request_(req, res) {
 		if(err instanceof HTTPError) {
 			res.status(err.code);
-			Object.keys(err.headers).forEach(function(key) {
+			ARRAY(Object.keys(err.headers)).forEach(function(key) {
 				res.header(key, err.headers[key]);
 			});
 			res.render('error', {'message':err.message});

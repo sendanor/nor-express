@@ -1,6 +1,6 @@
 {
   "name": "nor-express",
-  "version": "0.1.60",
+  "version": "1.0.0",
   "description": "Sendanor Express addons",
   "main": "src/index.js",
   "scripts": {
@@ -16,11 +16,11 @@
   "license": "MIT",
   "dependencies": {
     "q"            : "^1.0.1",
-    "nor-is"       : "^0.1.18",
-    "nor-fs"       : "^0.1.20",
-    "nor-debug"    : "^0.1.42",
-    "nor-array"    : "^0.1.8",
-    "nor-function" : "^0.1.7",
+    "nor-is"       : "^1.0.0",
+    "nor-fs"       : "^1.0.0",
+    "nor-debug"    : "^1.0.0",
+    "nor-array"    : "^1.0.0",
+    "nor-function" : "^1.0.0",
     "methods"      : "^1.1.0",
     "prettified"   : "^0.0.7",
     "escape-html"  : "^1.0.1",
